@@ -26,7 +26,7 @@ subtest 'basic parameter tests' => sub {
 };
 
 subtest 'dice parameter values' => sub {
-    plan tests => 13;
+    plan tests => 15;
 
     for ( 1, 2, 3, 5, 100 ) {
         my $roll = roll_dice( dice => $_, sides => 1 );
@@ -36,30 +36,30 @@ subtest 'dice parameter values' => sub {
         ok( @rolls == $_, "$_ elements returned in list context" );
     }
 
-    for ( -1, 0, 101 ) {
+    for ( -1, -0.5, 0, 1.5, 101 ) {
         my $roll = eval { roll_dice( dice => $_ ); };
         ok( !defined($roll), "dies with bad dice param: $_" );
     }
 };
 
 subtest 'sides parameter values' => sub {
-    plan tests => 10;
+    plan tests => 12;
 
     for ( 1, 2, 4, 6, 8, 10, 12, 100 ) {
         my $roll = roll_dice( sides => $_ );
         ok( defined($roll), "good sides param: $_" );
     }
 
-    for ( -1, 0 ) {
+    for ( -1, -0.5, 0, 0.5 ) {
         my $roll = eval { roll_dice( sides => $_ ); };
         ok( !defined($roll), "dies with bad sides param: $_" );
     }
 };
 
 subtest 'favor parameter values' => sub {
-    plan tests => 13;
+    plan tests => 15;
 
-    for (-1) {
+    for (-1, -0.5, 1.5) {
         my $roll = eval { roll_dice( favor => $_ ); };
         ok( !defined($roll), "dies with bad favor param: $_" );
     }
@@ -72,9 +72,9 @@ subtest 'favor parameter values' => sub {
 };
 
 subtest 'bias parameter values' => sub {
-    plan tests => 2;
+    plan tests => 4;
 
-    for ( -1, 101 ) {
+    for ( -1, -0.4, 0.4, 101 ) {
         my $roll = eval { roll_dice( bias => $_ ); };
         ok( !defined($roll), "dies with bad bias param: $_" );
     }
