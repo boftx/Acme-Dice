@@ -17,10 +17,10 @@ BEGIN {
 $Acme::Dice::VERSION = '0.01';
 
 my $defaults = {
-    dice => 1,
+    dice  => 1,
     sides => 6,
     favor => 0,
-    bias => 20,
+    bias  => 20,
 };
 
 sub roll_dice {
@@ -48,7 +48,7 @@ sub roll_craps {
     my $raw_args = @_ == 1 ? shift : {@_};
 
     croak "param present but undefined: bias"
-          if exists($raw_args->{bias}) && !defined($raw_args->{bias});
+      if exists( $raw_args->{bias} ) && !defined( $raw_args->{bias} );
 
     my $bias = delete( $raw_args->{bias} ) || 0;
 

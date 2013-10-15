@@ -4,8 +4,6 @@
 
 use Test::More tests => 7;
 
-#use Test::More;
-
 BEGIN { use_ok( 'Acme::Dice', qw(roll_dice) ); }
 
 subtest 'basic parameter tests' => sub {
@@ -102,11 +100,11 @@ subtest 'full range of possible values' => sub {
         }
 
         if ( keys( %{$rolls} ) ) {
-            my $msg = '  values: ' . join( ',', keys( %{$rolls} ) );
-            fail( "Unexpected values in range: $min_val .. $max_val\n" . $msg );
+            my $msg = join( ',', keys( %{$rolls} ) );
+            fail("Unexpected values found: $msg");
         }
         else {
-            pass("No unexpected values found in range: $min_val .. $max_val");
+            pass("No values outside the expected range: $min_val .. $max_val");
         }
     }
 };

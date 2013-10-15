@@ -2,8 +2,7 @@
 
 # t/20_roll_craps.t - check operation of the roll_craps function
 
-#use Test::More tests => 7;
-use Test::More;
+use Test::More tests => 4;
 
 BEGIN { use_ok( 'Acme::Dice', qw(roll_craps) ); }
 
@@ -51,11 +50,11 @@ subtest 'full range of possible values' => sub {
     }
 
     if ( keys( %{$rolls} ) ) {
-        my $msg = '  values: ' . join( ',', keys( %{$rolls} ) );
-        fail( "Unexpected values in range: $min_val .. $max_val\n" . $msg );
+        my $msg = join( ',', keys( %{$rolls} ) );
+        fail("Unexpected Value(s) found: $msg");
     }
     else {
-        pass("No unexpected values found in range: $min_val .. $max_val");
+        pass("No values outside the expected range: $min_val .. $max_val");
     }
 };
 
