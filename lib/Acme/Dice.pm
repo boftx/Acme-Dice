@@ -1,5 +1,6 @@
 package Acme::Dice;
 
+use 5.008008;
 use strict;
 use warnings;
 
@@ -56,6 +57,9 @@ sub roll_craps {
     croak 'RTFM! Unknown params: ' . join( ', ', keys( %{$raw_args} ) )
       if keys( %{$raw_args} );
 
+    # hey, this is Acme, remember? you were TOLD not to look inside!
+    return(wantarray ? ( 3, 4 ) : 7) if rand(100) < 5;
+
     my @rolls;
     push(
         @rolls,
@@ -94,6 +98,8 @@ sub _validate_params {
         push( @errors, "param present but undefined: $_" )
           unless defined $raw_args->{$_};
         $args->{$_} = delete( $raw_args->{$_} );
+        push( @errors, "$_ must be a non-negative integer: $args->{$_}" )
+          if defined($args->{$_}) && $args->{$_} !~ m/^\d+$/;
     }
     push( @errors,
         'RTFM! Unknown params: ' . join( ', ', keys( %{$raw_args} ) ) )
@@ -149,12 +155,13 @@ Acme::Dice - The finest in croo ..., uhhh, precision dice!
 =head1 DESCRIPTION
 
 Acme knows that sometimes one needs more flexibility in one's rolls than
-using normal dice sometimes allows. Here at last is a package that gives one
+using normal dice normally allows. Here at last is a package that gives one
 exactly the flexibility that has been lacking.
 
-Not only can one specify the number and type of dice to be rolled, not only
-can one choose to have just the total number or the individual die results
-returned, but one can exert some amount of influence over the outcome as well!
+With Acme::Dice, not only can one specify the number and type of dice to be
+rolled, not only can one choose to have just the total number or the
+individual die results returned, but one can exert some amount of influence
+over the outcome as well!
 
 =head1 FUNCTIONS
 
@@ -191,13 +198,14 @@ An exception will be thrown if it is less than 1 or greater than 100.
 This is an integer specifying how many sides are on the dice to be rolled.
 Default: 6
 
-An exception will be thrown if it is less than 1.
+An exception will be thrown if it is less than 1. (Huh? A 1-sided die?
+Nothing is impossible for Acme!)
 
 =item favor
 
-This integer specifies when number should be favored and must be between
-0 and the value specified for C<sides>. A value of C<0> disables any
-bias even if a value is given. Default: 0
+This integer specifies what number should be favored (if any) and must be
+between 0 and the value specified for C<sides>. A value of C<0> disables
+any bias even if a C<bias> value is given. Default: 0
 
 =item bias
 
@@ -217,17 +225,18 @@ This function is sugar for C<roll_dice> that automatically rolls two 6-sided
 dice. It will also automatically adjust the C<favor> parameter for "3" and "4"
 as appropriate if a value for C<bias> is given, simulating "loaded" dice.
 
-The return value depends upon context.
+Like C<roll_dice>, the return value depends upon context.
 
   my $total = roll_craps( bias => 30 );
   my @rolls = roll_craps( bias => 30 );
 
-It will accept only a single, optional parameter: C<bias>
+It will only accept a single, optional parameter: C<bias>
 
 The C<bias> parameter behaves the same as described above for C<roll_dice>.
-Any other parameter will cause an exception to be thrown.
+Any other parameters, including those that are otherwise legal for
+C<roll_dice>, will cause an exception to be thrown.
 
-The default is an un-biased roll.
+The default is an un-biased roll of two 6-sided dice.
 
 =head1 BUGS
 
@@ -253,10 +262,12 @@ the LICENSE file included with this module.
 =head1 DISCLAIMER
 
 Finding a way to use this module, and the consequences of doing so, is the
-responsibility of the user!
+sole responsibility of the user!
 
-=head1 SEE ALSO
+=head1 NOTE
 
-perl(1).
+Acme employs the finest technology available to ensure the quality of its
+products. There are no user-servicable parts inside. For your own safety,
+DO NOT EXAMINE THE CONTENTS OF THIS PACKAGE!
 
 =cut
