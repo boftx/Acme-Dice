@@ -145,10 +145,10 @@ Acme::Dice - The finest in croo ..., uhhh, precision dice!
 =head1 SYNOPSIS
 
  use Acme::Dice qw(roll_dice roll_craps);
-  
- my $roll = dice_roll( dice => 3, sides => 6, favor => 6, bias => 30 );
- my @dice = dice_roll( dice => 3, sides => 6, favor => 6, bias => 30 );
-  
+   
+ my $total = roll_dice( dice => 3, sides => 6, favor => 6, bias => 30 );
+ my @dice = roll_dice( dice => 3, sides => 6, favor => 6, bias => 30 );
+   
  my $craps_roll = dice_craps( bias => 30 );
  my @craps_dice = dice_craps( bias => 30 );
 
@@ -173,12 +173,13 @@ This is the primary function. It accepts the parameters listed below to
 control behavior and will return either the sum of the rolls or an array
 containing the results of individual dice rolls depending upon context.
 
- my $total = dice_roll( dice => 3, sides => 6, favor => 6, bias => 30 );
- my @dice = dice_roll( dice => 3, sides => 6, favor => 6, bias => 30 );
+ my $total = roll_dice( dice => 3, sides => 6, favor => 6, bias => 30 );
+ my @dice = roll_dice( dice => 3, sides => 6, favor => 6, bias => 30 );
   
 The two examples above both roll three six-sided dice with a 30% bias in
-favor of rolling a six (6) on each. The first returns the total of the three
-dice in a scalar, and the second returns an array with the individual rolls.
+favor of rolling a six (6) on each die. The first returns the total of the
+three dice in a scalar, and the second returns an array with the individual
+rolls.
 
 All parameters are optional, and if the function is called with no parameters
 it will roll a single 6-sided die with no bias.
@@ -203,16 +204,16 @@ Nothing is impossible for Acme!)
 
 =item favor
 
-This integer specifies what number should be favored (if any) and must be
-between 0 and the value specified for C<sides>. A value of C<0> disables
-any bias even if a C<bias> value is given. Default: 0
+This integer specifies which number (if any) should be favored  and must be
+between 0 and the value specified for C<sides>. A value of 0 disables
+any bias even if a value for C<bias> is given. Default: 0
 
 =item bias
 
 This is an integer between 0 and 100 that determines how much "weight" to
 place on the favored side. A value of C<20> says to increase the chance of
 rolling the favored number by 20%. A value of C<100> would mean to always
-roll the favored number. A value of C<0> would disable favoring completely,
+roll the favored number. A value of 0 will disable favoring completely,
 even if a value for C<favor> is given. Default: 0
 
 An exception will be thrown if the value is less than 0 or greater than 100.
@@ -228,7 +229,7 @@ as appropriate if a value for C<bias> is given, simulating "loaded" dice.
 Like C<roll_dice>, the return value depends upon context.
 
   my $total = roll_craps( bias => 30 );
-  my @rolls = roll_craps( bias => 30 );
+  my @dice = roll_craps( bias => 30 );
 
 It will only accept a single, optional parameter: C<bias>
 
