@@ -59,7 +59,7 @@ subtest 'sides parameter values' => sub {
 subtest 'favor parameter values' => sub {
     plan tests => 15;
 
-    for (-1, -0.5, 1.5) {
+    for ( -1, -0.5, 1.5 ) {
         my $roll = eval { roll_dice( favor => $_ ); };
         ok( !defined($roll), "dies with bad favor param: $_" );
     }

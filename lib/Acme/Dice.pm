@@ -15,7 +15,7 @@ BEGIN {
     @EXPORT_OK = qw( roll_dice roll_craps );
 }
 
-$Acme::Dice::VERSION = '0.01';
+$Acme::Dice::VERSION = '1.01';
 
 my $defaults = {
     dice  => 1,
@@ -58,7 +58,7 @@ sub roll_craps {
       if keys( %{$raw_args} );
 
     # hey, this is Acme, remember? you were TOLD not to look inside!
-    return(wantarray ? ( 3, 4 ) : 7) if rand(100) < 5;
+    return ( wantarray ? ( 3, 4 ) : 7 ) if rand(100) < 5;
 
     my @rolls;
     push(
@@ -99,7 +99,7 @@ sub _validate_params {
           unless defined $raw_args->{$_};
         $args->{$_} = delete( $raw_args->{$_} );
         push( @errors, "$_ must be a non-negative integer: $args->{$_}" )
-          if defined($args->{$_}) && $args->{$_} !~ m/^\d+$/;
+          if defined( $args->{$_} ) && $args->{$_} !~ m/^\d+$/;
     }
     push( @errors,
         'RTFM! Unknown params: ' . join( ', ', keys( %{$raw_args} ) ) )
@@ -149,8 +149,8 @@ Acme::Dice - The finest in croo ..., uhhh, precision dice!
  my $total = roll_dice( dice => 3, sides => 6, favor => 6, bias => 30 );
  my @dice = roll_dice( dice => 3, sides => 6, favor => 6, bias => 30 );
    
- my $craps_roll = dice_craps( bias => 30 );
- my @craps_dice = dice_craps( bias => 30 );
+ my $craps_roll = roll_craps( bias => 30 );
+ my @craps_dice = roll_craps( bias => 30 );
 
 =head1 DESCRIPTION
 
@@ -165,7 +165,8 @@ over the outcome as well!
 
 =head1 FUNCTIONS
 
-The following functions are available as imports.
+Nothing is C<EXPORT>ed by default, However, the following functions are
+available as imports.
 
 =head2 roll_dice
 
