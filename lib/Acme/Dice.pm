@@ -5,7 +5,6 @@ use strict;
 use warnings;
 
 use Carp;
-use Data::Dumper;
 
 BEGIN {
     use Exporter ();
@@ -15,7 +14,7 @@ BEGIN {
     @EXPORT_OK = qw( roll_dice roll_craps );
 }
 
-$Acme::Dice::VERSION = '1.01';
+$Acme::Dice::VERSION = '1.02';
 
 my $defaults = {
     dice  => 1,
@@ -91,7 +90,7 @@ sub _validate_params {
     my $args = {};
     my @errors;
 
-    # put put defaults in place for missing params
+    # put defaults in place for missing params
     # and detect incoming undefined params
     for ( keys( %{$defaults} ) ) {
         $raw_args->{$_} = $defaults->{$_} if !exists( $raw_args->{$_} );
@@ -135,7 +134,7 @@ sub _apply_bias {
     return;
 }
 
-1;
+'Beep Beep!';
 __END__
 
 =head1 NAME
